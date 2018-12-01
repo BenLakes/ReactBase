@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>html中引入 react.js</title>
+  <!-- react-dom 的加载需要使用react 所以必须保证加载的顺序 -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+      //  react 代码  指定这一段script 需要 babel 解析
+      // ReactDOM.render(
+      //   <h1>html 中引入React.js</h1>,
+      //   document.getElementById("app"),
+      // )
+    // <!-- 两个组件 -->
+  
+    // var Message = React.createClass({
+    //   render: return (<h1>123123</h1>)
+    // })
+
+    class TimeNow extends React.Component{
+        constructor(){
+          super();
+          this.state = {
+            time:''
+          }
+        }
+        componentDidMount = ()=>{
+          setInterval(() => {
+            let time = new Date().toLocaleString();
+            this.setState({
+              time:time
+            })
+          }, 1000);
+        }
+    render(){
+      const {time} = this.state;
+      return(
+        <div>时间：{time}</div>
+      )
+    }
+   
+    }
+
+    class MessageBox extends React.Component{
+        onClick = ()=>{
+          alert("被点击了");
+        }
+        render (){
+          return (
+            <div>
+              <h1 onClick={this.onClick}>Hello World!</h1>
+              <TimeNow/>
+              </div>
+          )
+        }
+    }
+    ReactDOM.render(<MessageBox/>,document.getElementById("app"));
+    </script>
+</body>
+</html>
